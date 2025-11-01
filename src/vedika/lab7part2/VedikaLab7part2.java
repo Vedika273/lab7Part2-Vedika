@@ -5,9 +5,11 @@
 package vedika.lab7part2;
 
 
+
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,9 +30,9 @@ public class VedikaLab7part2 extends Application {
     
     public Image[] images = new Image[119]; // space for 119 images
     public int currentIndex = 0;            // which image is showing
-    public Timeline timeline;               // used for automatic cycling
     public double interval = 2.0;           // seconds between images
     public PauseTransition slideshow;
+
     
     /**
      * @param args the command line arguments
@@ -42,35 +44,43 @@ public class VedikaLab7part2 extends Application {
     @Override
     public void start(Stage stage){
         // inside start(Stage primaryStage) at the top
-       for (int i = 0; i < 119; i++) {
+       for (int i = 0; i <= 19; i++) {
        int number = 101 + i; // filenames 101.png .. 219.png
-       images[i] = new Image("file:./src/images/" + number + ".png");
-       }
-     
+       
+       
+//       var stream = getClass().getResourceAsStream("/vedika/images/" + number + ".jpg");
+//    if (stream == null) {
+//        System.out.println("Cannot find image: " + number + ".jpg");
+//    } else {
+//        images[i] = new Image(stream);
+//        System.out.println("Loaded: " + number + ".jpg");
+//    }
 
+    
+}
        // still inside start()
         ImageView imageView = new ImageView();
-        imageView.setFitWidth(200);
-        imageView.setFitHeight(200);
+        imageView.setFitWidth(300);
+        imageView.setFitHeight(300);
+        
+
         imageView.setImage(images[currentIndex]); // show first image (index 0)
  
         // put imageView inside a VBox for center region
-        VBox middle = new VBox();
-        middle.setStyle("-fx-alignment: center; -fx-padding: 10;");
-        middle.getChildren().add(imageView);
+        VBox middle = new VBox(imageView);
+        middle.setAlignment(Pos.CENTER);
+        middle.setPadding(new Insets(10));
         
         // 3) Top and bottom labels + BorderPane
-        Label lblTop = new Label("Random Game");
-        Label lblBottom = new Label("Waiting...");
-
-        BorderPane root = new BorderPane();
-        root.setTop(lblTop);
-        root.setCenter(middle);
-        // left/right empty
-        root.setLeft(new Label(""));
-        root.setRight(new Label(""));
+        Label labelTop = new Label("Random Game");
+        labelTop.setStyle("-fx-font-size: 18px;");
+        BorderPane.setAlignment(labelTop, Pos.CENTER);
 
         
+        Label labelBottom = new Label("Waiting...");
+
+     
+
           // 4) Buttons and controls
         Button btnPlayPause = new Button("Play");
         Button btnSpeedUp = new Button("Speed+");
@@ -79,9 +89,19 @@ public class VedikaLab7part2 extends Application {
         HBox controls = new HBox(10, btnPlayPause, btnSpeedUp, btnSpeedDown);
         controls.setStyle("-fx-alignment: center; -fx-padding: 8;");
 
-        VBox bottomBox = new VBox(5, lblBottom, controls);
+        VBox bottomBox = new VBox(5, labelBottom, controls);
         bottomBox.setStyle("-fx-alignment: center;");
+       
+        
+        BorderPane root = new BorderPane();
+        root.setTop(labelTop);
+        root.setCenter(middle);
         root.setBottom(bottomBox);
+        // left/right empty
+        root.setLeft(new Label(""));
+        root.setRight(new Label(""));
+
+     
         
         // Slideshow logic (PauseTransition)
         slideshow = new PauseTransition(Duration.seconds(interval));
@@ -98,11 +118,11 @@ public class VedikaLab7part2 extends Application {
         btnPlayPause.setOnAction(e -> {
        if (btnPlayPause.getText().equals("Play")) {
            btnPlayPause.setText("Pause");
-           lblBottom.setText("Playing...");
+           labelBottom.setText("Playing...");
            slideshow.play();
        } else {
            btnPlayPause.setText("Play");
-           lblBottom.setText("Paused");
+           labelBottom.setText("Paused");
            slideshow.stop();
        }
    });
@@ -112,7 +132,7 @@ public class VedikaLab7part2 extends Application {
             if (interval > 0.5) { // minimum speed
                 interval -= 0.5;
                 slideshow.setDuration(Duration.seconds(interval));
-                lblBottom.setText("Speed: " + interval + "s");
+                labelBottom.setText("Speed: " + interval + "s");
             }
         });
         
@@ -120,7 +140,7 @@ public class VedikaLab7part2 extends Application {
         btnSpeedDown.setOnAction(e -> {
             interval += 0.5;
             slideshow.setDuration(Duration.seconds(interval));
-            lblBottom.setText("Speed: " + interval + "s");
+            labelBottom.setText("Speed: " + interval + "s");
         });
 
        
