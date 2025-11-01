@@ -27,81 +27,68 @@ import javafx.util.Duration;
  */
 public class VedikaLab7part2 extends Application {
     
-    
-    public Image[] images = new Image[20]; // space for 119 images
+    public Image[] images = new Image[20]; // space for 20 images
     public int currentIndex = 0;            // which image is showing
-    public double interval = 2.0;           // seconds between images
+    public double interval = 1.5;           // seconds between images
     public PauseTransition slideshow;
 
     
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
       launch(args);
     }
 
     @Override
     public void start(Stage stage){
-        // inside start(Stage primaryStage) at the top
-       for (int i = 0; i <= 19; i++) {
-       int number = 101 + i; // filenames 101.png .. 219.png
+       //load images 
+       for (int i = 0; i < images.length ; i++) {
+       int number = 101 + i;  // filenames 101.png .. 120.png
        images[i] = new Image("file:src/vedika/images/" + number + ".jpg");
-
-}
-       
+    }
+       //image view setup
         ImageView imageView = new ImageView();
         imageView.setFitWidth(300);
         imageView.setFitHeight(300);
-        
-
         imageView.setImage(images[currentIndex]); // show first image (index 0)
  
         // put imageView inside a VBox for center region
-        VBox middle = new VBox(imageView);
-        middle.setAlignment(Pos.CENTER);
-        middle.setPadding(new Insets(10));
+        VBox middleBox = new VBox(imageView);
+        middleBox.setAlignment(Pos.CENTER);
+        middleBox.setPadding(new Insets(10));
         
-        // 3) Top and bottom labels + BorderPane
+        // 3) Top and bottom labels 
         Label labelTop = new Label("Random Game");
         labelTop.setStyle("-fx-font-size: 18px;");
         BorderPane.setAlignment(labelTop, Pos.CENTER);
 
-        
         Label labelBottom = new Label("Waiting...");
 
-     
-
-          // 4) Buttons and controls
+         // Buttons 
         Button btnPlayPause = new Button("Play");
         Button btnSpeedUp = new Button("Speed+");
         Button btnSpeedDown = new Button("Speed-");
 
         HBox controls = new HBox(10, btnPlayPause, btnSpeedUp, btnSpeedDown);
+        controls.setAlignment(Pos.CENTER);
         controls.setStyle("-fx-alignment: center; -fx-padding: 8;");
-
+        controls.setPadding(new Insets(8));
+        
         VBox bottomBox = new VBox(5, labelBottom, controls);
+        bottomBox.setAlignment(Pos.CENTER);
         bottomBox.setStyle("-fx-alignment: center;");
        
-        
+        //Borderpane layout
         BorderPane root = new BorderPane();
         root.setTop(labelTop);
-        root.setCenter(middle);
+        root.setCenter(middleBox);
         root.setBottom(bottomBox);
         // left/right empty
         root.setLeft(new Label(""));
         root.setRight(new Label(""));
 
-     
-        
-        // Slideshow logic (PauseTransition)
+        // Slideshow (PauseTransition)
         slideshow = new PauseTransition(Duration.seconds(interval));
         slideshow.setOnFinished(e -> {
-            currentIndex++;
-            if (currentIndex >= images.length) {
-                currentIndex = 0;
-            }
-            imageView.setImage(images[currentIndex]);
+            showNextImage(imageView);
             slideshow.play(); // repeat
         });
         
@@ -123,7 +110,7 @@ public class VedikaLab7part2 extends Application {
             if (interval > 0.5) { // minimum speed
                 interval -= 0.5;
                 slideshow.setDuration(Duration.seconds(interval));
-                labelBottom.setText("Speed: " + interval + "s");
+                labelBottom.setText("Interval between the images: " + interval + "s");
             }
         });
         
@@ -131,7 +118,7 @@ public class VedikaLab7part2 extends Application {
         btnSpeedDown.setOnAction(e -> {
             interval += 0.5;
             slideshow.setDuration(Duration.seconds(interval));
-            labelBottom.setText("Speed: " + interval + "s");
+            labelBottom.setText("Interval between the images: " + interval + "s");
         });
 
        
