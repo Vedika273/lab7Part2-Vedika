@@ -106,6 +106,15 @@ public class VedikaLab7part2 extends Application {
            slideshow.stop();
        }
    });
+        
+        // Speed+ button
+        btnSpeedUp.setOnAction(e -> {
+            if (interval > 0.5) { // minimum speed
+                interval -= 0.5;
+                slideshow.setDuration(Duration.seconds(interval));
+                lblBottom.setText("Speed: " + interval + "s");
+            }
+        });
 
        
         Scene scene = new Scene(root, 350, 420);
