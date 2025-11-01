@@ -5,6 +5,7 @@
 package vedika.lab7part2;
 
 
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -16,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -28,7 +30,8 @@ public class VedikaLab7part2 extends Application {
     public int currentIndex = 0;            // which image is showing
     public Timeline timeline;               // used for automatic cycling
     public double interval = 2.0;           // seconds between images
-
+    public PauseTransition slideshow;
+    
     /**
      * @param args the command line arguments
      */
@@ -79,8 +82,18 @@ public class VedikaLab7part2 extends Application {
         VBox bottomBox = new VBox(5, lblBottom, controls);
         bottomBox.setStyle("-fx-alignment: center;");
         root.setBottom(bottomBox);
-    
-        // still inside start()
+        
+        // Slideshow logic (PauseTransition)
+        slideshow = new PauseTransition(Duration.seconds(interval));
+        slideshow.setOnFinished(e -> {
+            currentIndex++;
+            if (currentIndex >= images.length) {
+                currentIndex = 0;
+            }
+            imageView.setImage(images[currentIndex]);
+            slideshow.play(); // repeat
+        });
+       
         Scene scene = new Scene(root, 350, 420);
         stage.setTitle("Lab07 - Image Slideshow");
         stage.setScene(scene);
