@@ -4,6 +4,7 @@
  */
 package vedika.lab7part2;
 
+//https://github.com/Vedika273/lab7Part2-Vedika
 
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- *
+ * 
  * @author Vedika
  */
 public class VedikaLab7part2 extends Application {
@@ -38,11 +39,13 @@ public class VedikaLab7part2 extends Application {
 
     @Override
     public void start(Stage stage){
-       //load images 
-       for (int i = 0; i < images.length ; i++) {
-       int number = 101 + i;  // filenames 101.png .. 120.png
-       images[i] = new Image("file:src/vedika/images/" + number + ".jpg");
-    }
+        
+        //load images 
+        for (int i = 0; i < images.length ; i++) {
+        int number = 101 + i;  // filenames 101.png .. 120.png
+        images[i] = new Image("file:src/vedika/images/" + number + ".jpg");
+        }
+        
        //image view setup
         ImageView imageView = new ImageView();
         imageView.setFitWidth(300);
@@ -86,7 +89,7 @@ public class VedikaLab7part2 extends Application {
 
         // Slideshow (PauseTransition)
         slideshow = new PauseTransition(Duration.seconds(interval));
-        slideshow.setOnFinished(e -> {
+        slideshow.setOnFinished(e -> { //when the pause finshes 
             showNextImage(imageView);
             slideshow.play(); 
         });
@@ -94,11 +97,11 @@ public class VedikaLab7part2 extends Application {
         // Play / Pause button
         btnPlayPause.setOnAction(e -> {
         if (btnPlayPause.getText().equals("Play")) {
-           btnPlayPause.setText("Pause");
+           btnPlayPause.setText("Pause"); //change the button to "pause"
            labelBottom.setText("Playing...");
            slideshow.play();
           } else {
-           btnPlayPause.setText("Play");
+           btnPlayPause.setText("Play"); //change the button to "play"
            labelBottom.setText("Paused");
            slideshow.stop();
          }
@@ -128,7 +131,7 @@ public class VedikaLab7part2 extends Application {
    
         public void showNextImage(ImageView imageView) {
         currentIndex++; 
-        if (currentIndex >= images.length) {
+        if (currentIndex >= images.length) { //if the end of the array is reached then...
             currentIndex = 0; // go back to first image to make a cycle
         }
         imageView.setImage(images[currentIndex]);
