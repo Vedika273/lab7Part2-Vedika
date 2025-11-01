@@ -93,6 +93,20 @@ public class VedikaLab7part2 extends Application {
             imageView.setImage(images[currentIndex]);
             slideshow.play(); // repeat
         });
+        
+        // Play / Pause button
+        btnPlayPause.setOnAction(e -> {
+       if (btnPlayPause.getText().equals("Play")) {
+           btnPlayPause.setText("Pause");
+           lblBottom.setText("Playing...");
+           slideshow.play();
+       } else {
+           btnPlayPause.setText("Play");
+           lblBottom.setText("Paused");
+           slideshow.stop();
+       }
+   });
+
        
         Scene scene = new Scene(root, 350, 420);
         stage.setTitle("Lab07 - Image Slideshow");
