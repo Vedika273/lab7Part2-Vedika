@@ -28,7 +28,7 @@ import javafx.util.Duration;
 public class VedikaLab7part2 extends Application {
     
     
-    public Image[] images = new Image[119]; // space for 119 images
+    public Image[] images = new Image[20]; // space for 119 images
     public int currentIndex = 0;            // which image is showing
     public double interval = 2.0;           // seconds between images
     public PauseTransition slideshow;
@@ -46,19 +46,10 @@ public class VedikaLab7part2 extends Application {
         // inside start(Stage primaryStage) at the top
        for (int i = 0; i <= 19; i++) {
        int number = 101 + i; // filenames 101.png .. 219.png
-       
-       
-//       var stream = getClass().getResourceAsStream("/vedika/images/" + number + ".jpg");
-//    if (stream == null) {
-//        System.out.println("Cannot find image: " + number + ".jpg");
-//    } else {
-//        images[i] = new Image(stream);
-//        System.out.println("Loaded: " + number + ".jpg");
-//    }
+       images[i] = new Image("file:src/vedika/images/" + number + ".jpg");
 
-    
 }
-       // still inside start()
+       
         ImageView imageView = new ImageView();
         imageView.setFitWidth(300);
         imageView.setFitHeight(300);
