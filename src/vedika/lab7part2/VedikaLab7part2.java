@@ -115,6 +115,13 @@ public class VedikaLab7part2 extends Application {
                 lblBottom.setText("Speed: " + interval + "s");
             }
         });
+        
+        // Speed- button
+        btnSpeedDown.setOnAction(e -> {
+            interval += 0.5;
+            slideshow.setDuration(Duration.seconds(interval));
+            lblBottom.setText("Speed: " + interval + "s");
+        });
 
        
         Scene scene = new Scene(root, 350, 420);
