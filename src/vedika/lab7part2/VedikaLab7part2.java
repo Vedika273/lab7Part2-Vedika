@@ -33,7 +33,7 @@ public class VedikaLab7part2 extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-      
+      launch(args);
     }
 
     @Override
@@ -41,15 +41,16 @@ public class VedikaLab7part2 extends Application {
         // inside start(Stage primaryStage) at the top
        for (int i = 0; i < 119; i++) {
        int number = 101 + i; // filenames 101.png .. 219.png
-       images[i] = new Image("file:images/" + number + ".png");
-       
+       images[i] = new Image("file:./src/images/" + number + ".png");
        }
+     
+
        // still inside start()
         ImageView imageView = new ImageView();
         imageView.setFitWidth(200);
         imageView.setFitHeight(200);
         imageView.setImage(images[currentIndex]); // show first image (index 0)
-
+ 
         // put imageView inside a VBox for center region
         VBox middle = new VBox();
         middle.setStyle("-fx-alignment: center; -fx-padding: 10;");
@@ -78,9 +79,7 @@ public class VedikaLab7part2 extends Application {
         VBox bottomBox = new VBox(5, lblBottom, controls);
         bottomBox.setStyle("-fx-alignment: center;");
         root.setBottom(bottomBox);
-        
-        
-        
+    
         // still inside start()
         Scene scene = new Scene(root, 350, 420);
         stage.setTitle("Lab07 - Image Slideshow");
@@ -88,6 +87,17 @@ public class VedikaLab7part2 extends Application {
         stage.show();
 
 }
+    //add method to show the next image
+    public void showNextImage(ImageView imageView) {
+    currentIndex++; 
+
+    if (currentIndex >= images.length) {
+        currentIndex = 0; // go back to first image to make a cycle
+    }
+
+    imageView.setImage(images[currentIndex]);
+}
+
 }
 
     
