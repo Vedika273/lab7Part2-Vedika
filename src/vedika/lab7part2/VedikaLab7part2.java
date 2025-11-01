@@ -5,7 +5,6 @@
 package vedika.lab7part2;
 
 
-
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -89,21 +88,21 @@ public class VedikaLab7part2 extends Application {
         slideshow = new PauseTransition(Duration.seconds(interval));
         slideshow.setOnFinished(e -> {
             showNextImage(imageView);
-            slideshow.play(); // repeat
+            slideshow.play(); 
         });
         
         // Play / Pause button
         btnPlayPause.setOnAction(e -> {
-       if (btnPlayPause.getText().equals("Play")) {
+        if (btnPlayPause.getText().equals("Play")) {
            btnPlayPause.setText("Pause");
            labelBottom.setText("Playing...");
            slideshow.play();
-       } else {
+          } else {
            btnPlayPause.setText("Play");
            labelBottom.setText("Paused");
            slideshow.stop();
-       }
-   });
+         }
+        });
         
         // Speed+ button
         btnSpeedUp.setOnAction(e -> {
@@ -121,26 +120,17 @@ public class VedikaLab7part2 extends Application {
             labelBottom.setText("Interval between the images: " + interval + "s");
         });
 
-       
         Scene scene = new Scene(root, 350, 420);
         stage.setTitle("Lab07 - Image Slideshow");
         stage.setScene(scene);
         stage.show();
-
-}
-    //add method to show the next image
-    public void showNextImage(ImageView imageView) {
-    currentIndex++; 
-
-    if (currentIndex >= images.length) {
-        currentIndex = 0; // go back to first image to make a cycle
     }
-
-    imageView.setImage(images[currentIndex]);
-}
-
-}
-
-    
-    
-
+   
+        public void showNextImage(ImageView imageView) {
+        currentIndex++; 
+        if (currentIndex >= images.length) {
+            currentIndex = 0; // go back to first image to make a cycle
+        }
+        imageView.setImage(images[currentIndex]);
+      }
+    }
